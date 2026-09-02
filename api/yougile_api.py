@@ -32,6 +32,7 @@ class YougileAPI:
         self.user_id = response.json()["id"]
         return response
 
+    @allure.step("Создать проект")
     def post_project(self, title, user_id):
         self.idempotency_key = str(uuid.uuid4())
         body = {
@@ -47,7 +48,11 @@ class YougileAPI:
 
     @allure.step("Создать доску в проекте")
     def post_board(self, title, project_id):
-        body = {"title": title, "projectId": project_id}
+        body = {
+            "title": title,
+            "projectId": project_id,
+            "idempotencyKey": str(uuid.uuid4())
+        }
         response = requests.post(
             f"{self.base_url}/api-v2/boards", json=body, headers=self.headers
         )
