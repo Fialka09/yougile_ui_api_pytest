@@ -1,6 +1,7 @@
 import requests
 import allure
 
+
 class TasksAPI:
     def __init__(self, base_url, token):
         self.column_id = None
@@ -13,7 +14,9 @@ class TasksAPI:
 
     @allure.step("Получить список задач")
     def get_tasks(self):
-        response = requests.get(f"{self.base_url}/api-v2/task-list", headers=self.headers)
+        response = requests.get(
+            f"{self.base_url}/api-v2/task-list", headers=self.headers
+        )
         return response
 
     @allure.step("Создать задачу")
@@ -22,28 +25,37 @@ class TasksAPI:
             "title": title,
             "columnId": column_id,
         }
-        response = requests.post(f"{self.base_url}/api-v2/tasks",
-                                json=body, headers=self.headers)
+        response = requests.post(
+            f"{self.base_url}/api-v2/tasks", json=body, headers=self.headers
+        )
         self.task_id = response.json()["id"]
         return response
 
-
     @allure.step("Получить задачу по ID")
     def get_task_by_id(self, task_id):
-        response = requests.get(f"{self.base_url}/api-v2/tasks/{task_id}",
-                                headers=self.headers)
+        response = requests.get(
+            f"{self.base_url}/api-v2/tasks/{task_id}", headers=self.headers
+        )
         return response
 
     @allure.step("Отметить выполненной")
     def complete_task(self, task_id):
-        body = {"completed": True,}
-        response = requests.put(f"{self.base_url}/api-v2/tasks/{task_id}", json=body,
-                                   headers=self.headers)
+        body = {
+            "completed": True,
+        }
+        response = requests.put(
+            f"{self.base_url}/api-v2/tasks/{task_id}",
+            json=body,
+            headers=self.headers,
+        )
         return response
 
     @allure.step("Архивировать")
     def archive_task(self, task_id):
         body = {"archived": True}
-        response = requests.put(f"{self.base_url}/api-v2/tasks/{task_id}", json=body,
-                                headers=self.headers)
+        response = requests.put(
+            f"{self.base_url}/api-v2/tasks/{task_id}",
+            json=body,
+            headers=self.headers,
+        )
         return response

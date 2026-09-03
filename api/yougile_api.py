@@ -15,7 +15,7 @@ class YougileAPI:
         self.base_url = base_url
         self.headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {token}"
+            "Authorization": f"Bearer {token}",
         }
 
     @allure.step("Получить список проектов")
@@ -51,7 +51,7 @@ class YougileAPI:
         body = {
             "title": title,
             "projectId": project_id,
-            "idempotencyKey": str(uuid.uuid4())
+            "idempotencyKey": str(uuid.uuid4()),
         }
         response = requests.post(
             f"{self.base_url}/api-v2/boards", json=body, headers=self.headers
@@ -60,7 +60,7 @@ class YougileAPI:
         return response
 
     @allure.step("Создать колонку на доске")
-    def post_collumns(self, title, board_id):
+    def post_columns(self, title, board_id):
         body = {
             "title": title,
             "boardId": board_id,
@@ -107,12 +107,18 @@ class YougileAPI:
         body = {
             "title": title,
             "users": {user_id: "admin"},
-            "idempotencyKey": self.idempotency_key  # тот же ключ
+            "idempotencyKey": self.idempotency_key,  # тот же ключ
         }
         response = requests.post(
-            f"{self.base_url}/api-v2/projects",
-            json=body,
-            headers=self.headers
+            f"{self.base_url}/api-v2/projects", json=body, headers=self.headers
         )
         return response
 
+    @allure.step("Отметить проект удалённым")
+    def delete_project(self):
+        body = {"deleted": True}
+        return requests.put(
+            f"{self.base_url}/api-v2/projects/{self.project_id}",
+            json=body,
+            headers=self.headers,
+        )

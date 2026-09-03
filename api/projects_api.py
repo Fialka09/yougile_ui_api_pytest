@@ -24,7 +24,7 @@ class ProjectsAPI:
     def get_project_by_id(self):
         response = requests.get(
             f"{self.base_url}/api-v2/projects/{self.project_id}",
-            headers=self.headers
+            headers=self.headers,
         )
         return response
 

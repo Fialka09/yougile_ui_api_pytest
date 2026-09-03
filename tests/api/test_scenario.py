@@ -21,3 +21,5 @@ def test_scenario(token):
     api.post_task("Задача по диплому", api.column_id)
     assert api.task_id is not None  # задача в API есть
     api.put_task(api.task_id)
+
+    api.delete_project()
