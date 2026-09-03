@@ -9,12 +9,10 @@ from config import BASE_URL
 def test_create_project_empty_title(token):
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {token}"
+        "Authorization": f"Bearer {token}",
     }
     response = requests.post(
-        f"{BASE_URL}/api-v2/projects",
-        json={"title": ""},
-        headers=headers
+        f"{BASE_URL}/api-v2/projects", json={"title": ""}, headers=headers
     )
     assert response.status_code == 400
 
@@ -23,11 +21,11 @@ def test_create_project_empty_title(token):
 def test_get_nonexistent_project(token):
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {token}"
+        "Authorization": f"Bearer {token}",
     }
     response = requests.get(
         f"{BASE_URL}/api-v2/projects/00000000-0000-0000-0000-000000000000",
-        headers=headers
+        headers=headers,
     )
     assert response.status_code == 404
 

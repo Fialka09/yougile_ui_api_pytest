@@ -31,7 +31,10 @@ def test_update_board(api, boards_api):
 @allure.title("Удаление доски")
 def test_delete_board(api, boards_api):
     api.post_project("Отметить доску удаленной")
-    boards_api.post_new_board(api.project_id, "Моя доска")
+    boards_api.post_new_board(api.project_id, "Доска 1")
+    boards_api.post_new_board(api.project_id, "Доска 2")
+
     response = boards_api.delete_board_by_id(boards_api.board_id)
-    assert response.status_code in [200, 400]
+    assert response.status_code == 200
+
     api.delete_project()

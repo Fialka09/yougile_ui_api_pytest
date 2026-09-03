@@ -15,7 +15,7 @@ def test_scenario(token):
     api.post_board("Моя доска", api.project_id)
     assert api.board_id is not None  # доска в API есть
 
-    api.post_collumns("Доделать", api.board_id)
+    api.post_columns("Доделать", api.board_id)
     assert api.column_id is not None  # колонка в API есть
 
     api.post_task("Задача по диплому", api.column_id)

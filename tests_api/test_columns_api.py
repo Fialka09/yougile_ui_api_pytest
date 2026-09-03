@@ -39,5 +39,5 @@ def test_delete_column(api, boards_api, columns_api):
     boards_api.post_new_board(api.project_id, "Доска")
     columns_api.post_new_columns("Дела в работе", boards_api.board_id)
     response = columns_api.delete_column_id(columns_api.column_id)
-    assert response.status_code in [200, 400]
+    assert response.status_code == 200
     api.delete_project()
