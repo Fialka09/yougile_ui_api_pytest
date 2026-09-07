@@ -22,7 +22,7 @@ class LoginPage:
         )
         self.error_message = (
             By.XPATH,
-            "//div[contains(@class, 'login-error')]"
+            "//div[contains(@class, 'login-error')]",
         )
 
     @allure.step("Нажать Войти на главной")
@@ -54,8 +54,5 @@ class LoginPage:
     @allure.step("Получить текст ошибки")
     def get_error_text(self) -> str:
         wait = WebDriverWait(self.driver, 20)  # отдельное ожидание
-        error = wait.until(
-            EC.presence_of_element_located(self.error_message)
-        )
+        error = wait.until(EC.presence_of_element_located(self.error_message))
         return error.text
-

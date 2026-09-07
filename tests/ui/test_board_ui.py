@@ -1,9 +1,7 @@
 import time
 import pytest
 import allure
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from ui.pages.project_form import ProjectForm
 from ui.pages.board_page import BoardPage
 
@@ -27,9 +25,7 @@ def test_add_task(logged_in_driver, chats_api):
 
     with allure.step("Проверить, что задача отображается"):
         wait = WebDriverWait(logged_in_driver, 15)
-        wait.until(
-            lambda driver: "Задача по диплому" in driver.page_source
-        )
+        wait.until(lambda driver: "Задача по диплому" in driver.page_source)
 
     with allure.step("Удалить проект"):
         form.delete_project(project_name)

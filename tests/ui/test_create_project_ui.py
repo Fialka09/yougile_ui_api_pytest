@@ -24,12 +24,14 @@ def test_create_project(logged_in_driver, chats_api):
     with allure.step("Удалить чат проекта"):
         chats_api.delete_chat_by_title(project_name)
 
+
 @allure.title("Закрытие формы крестиком")
 def test_close_project(logged_in_driver):
     project_form = ProjectForm(logged_in_driver)
     project_form.click_add()
     project_form.select_project_type()
     project_form.click_close()
+
 
 @allure.title("Закрытие формы кнопкой Отмена")
 def test_close_project_form(logged_in_driver):
@@ -46,15 +48,11 @@ def test_uncheck_chat(logged_in_driver):
     form.select_project_type()
     form.uncheck_chat()
 
+
 @allure.title("Проверка неактивности кнопки")
 def test_create_button_disabled(logged_in_driver):
     form = ProjectForm(logged_in_driver)
     form.click_add()
     form.select_project_type()
 
-    button = logged_in_driver.find_element(*form.create_button)
-
-
     assert not form.is_create_button_enabled()
-
-

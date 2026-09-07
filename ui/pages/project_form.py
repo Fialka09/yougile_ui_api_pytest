@@ -27,32 +27,17 @@ class ProjectForm:
         self.cancel_button = (By.XPATH, "//div[text()='Отмена']")
         self.close_button = (
             By.XPATH,
-            "//div[contains(@class, 'group/icon-button')]"
+            "//div[contains(@class, 'group/icon-button')]",
         )
         self.chat_checkbox = (By.XPATH, "//div[@role='checkbox']")
-        self.id_prefix = (
-            By.XPATH,
-            "//input[@type='text' and @value!=''][2]"
-        )
-        self.my_company = (
-            By.XPATH,
-            "//div[text()='Моя компания']"
-        )
-        self.project_card = (
-            By.XPATH,
-            "//div[@data-testid='project-card']"
-        )
-        self.project_title = (
-            By.XPATH,
-            ".//div[@data-testid='project-title']"
-        )
-        self.delete_button = (
-            By.XPATH,
-            "//div[text()='Удалить']"
-        )
+        self.id_prefix = (By.XPATH, "//input[@type='text' and @value!=''][2]")
+        self.my_company = (By.XPATH, "//div[text()='Моя компания']")
+        self.project_card = (By.XPATH, "//div[@data-testid='project-card']")
+        self.project_title = (By.XPATH, ".//div[@data-testid='project-title']")
+        self.delete_button = (By.XPATH, "//div[text()='Удалить']")
         self.confirm_delete_button = (
             By.XPATH,
-            "//div[contains(@class, 'text-left') and text()='Удалить']"
+            "//div[contains(@class, 'text-left') and text()='Удалить']",
         )
 
     @allure.step("Нажать на +")
@@ -99,15 +84,11 @@ class ProjectForm:
     @allure.step("Удалить проект через меню")
     def delete_project(self, project_name: str):
         # Перейти в «Моя компания»
-        company = self.wait.until(
-            EC.element_to_be_clickable(self.my_company)
-        )
+        company = self.wait.until(EC.element_to_be_clickable(self.my_company))
         company.click()
 
         # Дождаться карточек
-        self.wait.until(
-            EC.presence_of_element_located(self.project_card)
-        )
+        self.wait.until(EC.presence_of_element_located(self.project_card))
 
         # Найти карточку
         cards = self.driver.find_elements(
