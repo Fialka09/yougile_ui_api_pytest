@@ -62,6 +62,7 @@ def logged_in_driver(chrome_driver):
     login_page.click_login()
     yield chrome_driver
 
+
 @pytest.fixture
 def chats_api(token):
     return ChatsAPI(BASE_URL, token)
