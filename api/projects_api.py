@@ -17,7 +17,8 @@ class ProjectsAPI:
         response = requests.post(
             f"{self.base_url}/api-v2/projects", json=body, headers=self.headers
         )
-        self.project_id = response.json()["id"]
+        if response.status_code == 201:
+            self.project_id = response.json()["id"]
         return response
 
     @allure.step("Получить проект по ID")
