@@ -1,4 +1,5 @@
 import allure
+import pytest
 
 
 @allure.feature("API")
@@ -31,3 +32,21 @@ def test_delete_project(api):
 
     check = api.get_project_by_id()
     assert check.json()["deleted"] is True
+
+
+@allure.title("Создание проекта с разными названиями")
+@pytest.mark.api
+@pytest.mark.parametrize(
+    "project_title",
+    [
+        "Диплом2026",
+        "Проект на русском",
+        "Diploma Project",
+        "12345",
+        "Проект-тест_1",
+    ],
+)
+def test_create_project_with_different_titles(api, project_title):
+    response = api.post_project(project_title)
+    assert response.status_code == 201
+    api.delete_project()

@@ -1,19 +1,28 @@
 import allure
 import requests
 from config import BASE_URL
+import pytest
 
 
 @allure.feature("API")
 @allure.story("Негативные тесты")
-@allure.title("Создание проекта с пустым названием")
-def test_create_project_empty_title(token):
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {token}",
-    }
-    response = requests.post(
-        f"{BASE_URL}/api-v2/projects", json={"title": ""}, headers=headers
-    )
+@allure.title("Создание проекта с невалидным названием")
+@pytest.mark.negative
+@pytest.mark.parametrize(
+    "invalid_title",
+    [
+        "",
+        " ",
+        "   ",
+    ],
+)
+def test_create_project_with_invalid_title(api, invalid_title):
+    response = api.post_project(invalid_title)
+
+    # Если проект создался (баг) — удаляем
+    if response.status_code == 201:
+        api.delete_project()
+
     assert response.status_code == 400
 
 

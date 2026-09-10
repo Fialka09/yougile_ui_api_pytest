@@ -1,4 +1,5 @@
 import allure
+import pytest
 
 
 @allure.feature("API")
@@ -40,4 +41,26 @@ def test_delete_column(api, boards_api, columns_api):
     columns_api.post_new_columns("Дела в работе", boards_api.board_id)
     response = columns_api.delete_column_id(columns_api.column_id)
     assert response.status_code == 200
+    api.delete_project()
+
+
+@allure.title("Создание колонки с разными названиями")
+@pytest.mark.api
+@pytest.mark.parametrize(
+    "column_title",
+    [
+        "Колонка2026",
+        "Новая колонка",
+        "New Column",
+        "12345",
+        "Колонка-тест_1",
+    ],
+)
+def test_create_column_with_different_titles(
+    api, boards_api, columns_api, column_title
+):
+    api.post_project("Проект для колонки")
+    boards_api.post_new_board(api.project_id, "Доска")
+    response = columns_api.post_new_columns(column_title, boards_api.board_id)
+    assert response.status_code == 201
     api.delete_project()
