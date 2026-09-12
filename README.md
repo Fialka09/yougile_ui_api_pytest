@@ -53,12 +53,21 @@ YOUGILE_COMPANY_ID=id_компании
 `pytest`
 
 #### Только API:
-
 ```pytest tests/api```
 
-#### Только UI:
+по маркеру:
+```pytest -m api```
 
+#### Только UI:
 ```pytest tests/ui```
+по маркеру:
+```pytest -m ui```
+
+### Только позитивные
+```pytest -m positive```
+
+### Только негативные
+```pytest -m negative```
 
 #### С Allure-отчётом:
 

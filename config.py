@@ -22,14 +22,15 @@ def get_token():
 
     if len(keys) > 0:
         return keys[-1]["key"]
-    else:
-        response = requests.post(
-            f"{BASE_URL}/api-v2/auth/keys",
-            json={
-                "login": LOGIN,
-                "password": PASSWORD,
-                "companyId": COMPANY_ID,
-            },
-        )
-        assert response.status_code == 201, "Не удалось создать ключ"
-        return response.json()["key"]
+
+    response = requests.post(
+        f"{BASE_URL}/api-v2/auth/keys",
+        json={
+            "login": LOGIN,
+            "password": PASSWORD,
+            "companyId": COMPANY_ID,
+        },
+    )
+    if response.status_code != 201:
+        raise Exception("Не удалось создать ключ")
+    return response.json()["key"]
