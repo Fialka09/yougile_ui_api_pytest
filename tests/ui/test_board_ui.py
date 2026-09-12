@@ -1,7 +1,6 @@
 import time
 import pytest
 import allure
-from selenium.webdriver.support.ui import WebDriverWait
 from ui.pages.project_form import ProjectForm
 from ui.pages.board_page import BoardPage
 
@@ -24,8 +23,7 @@ def test_add_task(logged_in_driver, chats_api):
     board.enter_task_name("Задача по диплому")
 
     with allure.step("Проверить, что задача отображается"):
-        wait = WebDriverWait(logged_in_driver, 15)
-        wait.until(lambda driver: "Задача по диплому" in driver.page_source)
+        assert board.is_task_displayed("Задача по диплому")
 
     with allure.step("Удалить проект"):
         form.delete_project(project_name)

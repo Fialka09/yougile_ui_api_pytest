@@ -1,7 +1,7 @@
 import allure
 import requests
-from config import BASE_URL
 import pytest
+from config import BASE_URL
 
 
 @allure.feature("API")
@@ -33,13 +33,27 @@ def test_get_nonexistent_project(token):
         "Authorization": f"Bearer {token}",
     }
     response = requests.get(
-        f"{BASE_URL}/api-v2/projects/00000000-0000-0000-0000-000000000000",
+        f"{BASE_URL}/api-v2/projects/00000000",
         headers=headers,
     )
-    assert response.status_code == 404
+
+    with allure.step("Проверить статус-код 404"):
+        assert response.status_code == 404
+
+    with allure.step("Проверить тело ошибки"):
+        body = response.json()
+        assert body["statusCode"] == 404
+        assert body["message"] == "Проект не найден"
 
 
 @allure.title("Запрос без токена")
 def test_request_without_token():
     response = requests.get(f"{BASE_URL}/api-v2/projects")
-    assert response.status_code == 401
+
+    with allure.step("Проверить статус-код 401"):
+        assert response.status_code == 401
+
+    with allure.step("Проверить тело ошибки"):
+        body = response.json()
+        assert body["statusCode"] == 401
+        assert body["message"] == "Unauthorized"

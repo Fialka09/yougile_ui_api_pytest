@@ -16,7 +16,7 @@ def test_create_project(logged_in_driver, chats_api):
     project_form.select_create_button()
 
     with allure.step("Проверить, что проект отображается"):
-        assert project_name in logged_in_driver.page_source
+        assert project_form.is_project_displayed(project_name)
 
     with allure.step("Удалить созданный проект"):
         project_form.delete_project(project_name)
