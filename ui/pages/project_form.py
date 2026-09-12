@@ -1,6 +1,7 @@
 import time
 import allure
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -8,9 +9,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class ProjectForm:
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver) -> None:
         self.driver = driver
-        self.wait = WebDriverWait(driver, 15)
+        self.wait = WebDriverWait(driver, 20)
         self.add_button = (
             By.XPATH,
             "//div[@data-testid='add-project-button']",
@@ -41,40 +42,40 @@ class ProjectForm:
         )
 
     @allure.step("Нажать на +")
-    def click_add(self):
+    def click_add(self) -> None:
         self.wait.until(EC.element_to_be_clickable(self.add_button)).click()
 
     @allure.step("Выбрать 'Проект с задачами'")
-    def select_project_type(self):
+    def select_project_type(self) -> None:
         self.wait.until(EC.element_to_be_clickable(self.project_type)).click()
 
     @allure.step("Ввести название проекта")
-    def enter_project_name(self, name):
+    def enter_project_name(self, name: str) -> None:
         field = self.wait.until(EC.element_to_be_clickable(self.name_field))
         field.clear()
         field.send_keys(name)
 
     @allure.step("Нажать на кнопку 'Добавить проект с задачами'")
-    def select_create_button(self):
+    def select_create_button(self) -> None:
         self.wait.until(EC.element_to_be_clickable(self.create_button)).click()
 
     @allure.step("Закрыть форму")
-    def click_close(self):
+    def click_close(self) -> None:
         close = self.wait.until(
             EC.presence_of_element_located(self.close_button)
         )
         self.driver.execute_script("arguments[0].click();", close)
 
     @allure.step("Нажать Отмена")
-    def click_cancel(self):
+    def click_cancel(self) -> None:
         self.wait.until(EC.element_to_be_clickable(self.cancel_button)).click()
 
     @allure.step("Снять галочку чата")
-    def uncheck_chat(self):
+    def uncheck_chat(self) -> None:
         self.wait.until(EC.element_to_be_clickable(self.chat_checkbox)).click()
 
     @allure.step("Проверить активность кнопки")
-    def is_create_button_enabled(self):
+    def is_create_button_enabled(self) -> bool:
         button = self.wait.until(
             EC.presence_of_element_located(self.create_button)
         )
@@ -82,7 +83,7 @@ class ProjectForm:
         return "pointer-events-none" not in parent.get_attribute("class")
 
     @allure.step("Удалить проект через меню")
-    def delete_project(self, project_name: str):
+    def delete_project(self, project_name: str) -> None:
         # Перейти в «Моя компания»
         company = self.wait.until(EC.element_to_be_clickable(self.my_company))
         company.click()
@@ -133,3 +134,10 @@ class ProjectForm:
         self.driver.execute_script("arguments[0].click();", confirm)
 
         time.sleep(2)
+
+    @allure.step("Проверить, что проект отображается")
+    def is_project_displayed(self, project_name: str) -> bool:
+        """Проверить, что проект отображается на странице."""
+        return self.wait.until(
+            lambda driver: project_name in driver.page_source
+        )
