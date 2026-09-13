@@ -1,4 +1,5 @@
 import allure
+import pytest
 import time
 from ui.pages.project_form import ProjectForm
 
@@ -6,6 +7,8 @@ from ui.pages.project_form import ProjectForm
 @allure.feature("UI")
 @allure.story("Проекты")
 @allure.title("Создание проекта")
+@pytest.mark.ui
+@pytest.mark.positive
 def test_create_project(logged_in_driver, chats_api):
     project_form = ProjectForm(logged_in_driver)
     project_name = f"Проект {int(time.time())}"
@@ -26,6 +29,8 @@ def test_create_project(logged_in_driver, chats_api):
 
 
 @allure.title("Закрытие формы крестиком")
+@pytest.mark.ui
+@pytest.mark.positive
 def test_close_project(logged_in_driver):
     project_form = ProjectForm(logged_in_driver)
     project_form.click_add()
@@ -34,6 +39,8 @@ def test_close_project(logged_in_driver):
 
 
 @allure.title("Закрытие формы кнопкой Отмена")
+@pytest.mark.ui
+@pytest.mark.positive
 def test_close_project_form(logged_in_driver):
     project_form = ProjectForm(logged_in_driver)
     project_form.click_add()
@@ -42,6 +49,8 @@ def test_close_project_form(logged_in_driver):
 
 
 @allure.title("Снятие галочки чата")
+@pytest.mark.ui
+@pytest.mark.positive
 def test_uncheck_chat(logged_in_driver):
     form = ProjectForm(logged_in_driver)
     form.click_add()
@@ -50,6 +59,8 @@ def test_uncheck_chat(logged_in_driver):
 
 
 @allure.title("Проверка неактивности кнопки")
+@pytest.mark.ui
+@pytest.mark.positive
 def test_create_button_disabled(logged_in_driver):
     form = ProjectForm(logged_in_driver)
     form.click_add()

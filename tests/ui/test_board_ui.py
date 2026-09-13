@@ -9,6 +9,7 @@ from ui.pages.board_page import BoardPage
 @allure.story("Доска")
 @allure.title("Добавление задачи")
 @pytest.mark.ui
+@pytest.mark.positive
 def test_add_task(logged_in_driver, chats_api):
     form = ProjectForm(logged_in_driver)
     project_name = f"Проект {int(time.time())}"

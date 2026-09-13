@@ -1,4 +1,5 @@
 import allure
+import pytest
 from config import LOGIN, PASSWORD
 from ui.pages.login_page import LoginPage
 
@@ -6,6 +7,8 @@ from ui.pages.login_page import LoginPage
 @allure.feature("UI")
 @allure.story("Авторизация")
 @allure.title("Вход с валидными данными")
+@pytest.mark.ui
+@pytest.mark.positive
 def test_login(chrome_driver):
     page = LoginPage(chrome_driver)
     page.open()
@@ -19,6 +22,8 @@ def test_login(chrome_driver):
 
 
 @allure.title("Авторизация с неверным паролем")
+@pytest.mark.ui
+@pytest.mark.negative
 def test_login_wrong_password(logged_in_driver):
     login_page = LoginPage(logged_in_driver)
     login_page.open()
@@ -32,6 +37,8 @@ def test_login_wrong_password(logged_in_driver):
 
 
 @allure.title("Авторизация с пустым email")
+@pytest.mark.ui
+@pytest.mark.negative
 def test_login_empty_email(logged_in_driver):
     login_page = LoginPage(logged_in_driver)
     login_page.open()
@@ -43,7 +50,10 @@ def test_login_empty_email(logged_in_driver):
     with allure.step("Проверить, что появилось сообщение об ошибке"):
         assert "Неверный e-mail или пароль" in login_page.get_error_text()
 
+
 @allure.title("Авторизация с пустым паролем")
+@pytest.mark.ui
+@pytest.mark.negative
 def test_login_empty_password(logged_in_driver):
     login_page = LoginPage(logged_in_driver)
     login_page.open()
