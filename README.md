@@ -69,6 +69,9 @@ YOUGILE_COMPANY_ID=id_компании
 ### Только негативные
 ```pytest -m negative```
 
+### Только сценарий
+```pytest -m scenario --collect-only -q```
+
 #### С Allure-отчётом:
 
 ```pytest --alluredir=allure-results```
@@ -81,6 +84,9 @@ YOUGILE_COMPANY_ID=id_компании
 
 ### Полезные ссылки
 
+[Система управления проектами YouGile](https://ru.yougile.com/)
+
+[Тест-план Yonote](https://surinaea-qa133-2-skypro.yonote.ru/share/2925b354-2993-416e-8176-4fa097130e6d)
 
 [Документация YouGile API v2.0](https://ru.yougile.com/api-v2#/)
 
