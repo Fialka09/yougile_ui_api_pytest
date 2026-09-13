@@ -5,6 +5,8 @@ import pytest
 @allure.feature("API")
 @allure.story("Колонки")
 @allure.title("Создание колонки")
+@pytest.mark.api
+@pytest.mark.positive
 def test_create_column(api, boards_api, columns_api):
     api.post_project("Проект для колонки")
     boards_api.post_new_board(api.project_id, "Доска")
@@ -20,6 +22,8 @@ def test_create_column(api, boards_api, columns_api):
 
 
 @allure.title("Обновление колонки")
+@pytest.mark.api
+@pytest.mark.positive
 def test_update_column(api, boards_api, columns_api):
     api.post_project("Проект для колонки")
     boards_api.post_new_board(api.project_id, "Доска")
@@ -35,6 +39,8 @@ def test_update_column(api, boards_api, columns_api):
 
 
 @allure.title("Удаление колонки")
+@pytest.mark.api
+@pytest.mark.positive
 def test_delete_column(api, boards_api, columns_api):
     api.post_project("Проект для колонки")
     boards_api.post_new_board(api.project_id, "Доска")
@@ -46,6 +52,7 @@ def test_delete_column(api, boards_api, columns_api):
 
 @allure.title("Создание колонки с разными названиями")
 @pytest.mark.api
+@pytest.mark.positive
 @pytest.mark.parametrize(
     "column_title",
     [

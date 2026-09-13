@@ -1,4 +1,5 @@
 import allure
+import pytest
 from config import BASE_URL
 from api.yougile_api import YougileAPI
 
@@ -6,6 +7,9 @@ from api.yougile_api import YougileAPI
 @allure.feature("API")
 @allure.story("Сквозной сценарий")
 @allure.title("Пользователь → проект → доска → колонка → задача")
+@pytest.mark.api
+@pytest.mark.scenario
+@pytest.mark.positive
 def test_scenario(token):
     api = YougileAPI(BASE_URL, token)
 

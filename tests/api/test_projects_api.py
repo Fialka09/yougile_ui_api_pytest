@@ -5,6 +5,8 @@ import pytest
 @allure.feature("API")
 @allure.story("Проекты")
 @allure.title("Создание проекта")
+@pytest.mark.api
+@pytest.mark.positive
 def test_create_project(api):
     response = api.post_project("Диплом")
     assert response.status_code == 201
@@ -12,6 +14,8 @@ def test_create_project(api):
 
 
 @allure.title("Обновление проекта")
+@pytest.mark.api
+@pytest.mark.positive
 def test_update_project(api):
     api.post_project("Диплом")
     response = api.update_project("Диплом сдан")
@@ -24,6 +28,8 @@ def test_update_project(api):
 
 
 @allure.title("Отметить проект удалённым")
+@pytest.mark.api
+@pytest.mark.positive
 def test_delete_project(api):
     api.post_project("Отметить удаленным")
     response = api.delete_project()
@@ -36,6 +42,7 @@ def test_delete_project(api):
 
 @allure.title("Создание проекта с разными названиями")
 @pytest.mark.api
+@pytest.mark.positive
 @pytest.mark.parametrize(
     "project_title",
     [

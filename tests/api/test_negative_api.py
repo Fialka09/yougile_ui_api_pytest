@@ -7,6 +7,7 @@ from config import BASE_URL
 @allure.feature("API")
 @allure.story("Негативные тесты")
 @allure.title("Создание проекта с невалидным названием")
+@pytest.mark.api
 @pytest.mark.negative
 @pytest.mark.parametrize(
     "invalid_title",
@@ -27,6 +28,8 @@ def test_create_project_with_invalid_title(api, invalid_title):
 
 
 @allure.title("Получение несуществующего проекта")
+@pytest.mark.api
+@pytest.mark.negative
 def test_get_nonexistent_project(token):
     headers = {
         "Content-Type": "application/json",
@@ -47,6 +50,8 @@ def test_get_nonexistent_project(token):
 
 
 @allure.title("Запрос без токена")
+@pytest.mark.api
+@pytest.mark.negative
 def test_request_without_token():
     response = requests.get(f"{BASE_URL}/api-v2/projects")
 

@@ -5,6 +5,8 @@ import pytest
 @allure.feature("API")
 @allure.story("Доски")
 @allure.title("Создание доски")
+@pytest.mark.api
+@pytest.mark.positive
 def test_create_board(api, boards_api):
     api.post_project("Проект для доски")
     response = boards_api.post_new_board(api.project_id, "Моя доска")
@@ -17,6 +19,8 @@ def test_create_board(api, boards_api):
 
 
 @allure.title("Обновление доски")
+@pytest.mark.api
+@pytest.mark.positive
 def test_update_board(api, boards_api):
     api.post_project("Сменить название доски")
     boards_api.post_new_board(api.project_id, "Моя доска")
@@ -30,6 +34,8 @@ def test_update_board(api, boards_api):
 
 
 @allure.title("Удаление доски")
+@pytest.mark.api
+@pytest.mark.positive
 def test_delete_board(api, boards_api):
     api.post_project("Отметить доску удаленной")
     boards_api.post_new_board(api.project_id, "Доска 1")
@@ -43,6 +49,7 @@ def test_delete_board(api, boards_api):
 
 @allure.title("Создание доски с разными названиями")
 @pytest.mark.api
+@pytest.mark.positive
 @pytest.mark.parametrize(
     "board_title",
     [

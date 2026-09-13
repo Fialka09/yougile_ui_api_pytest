@@ -1,4 +1,5 @@
 import allure
+import pytest
 from config import BASE_URL
 from api.projects_api import ProjectsAPI
 
@@ -6,6 +7,8 @@ from api.projects_api import ProjectsAPI
 @allure.feature("API")
 @allure.story("Проекты")
 @allure.title("Получение списка проектов")
+@pytest.mark.api
+@pytest.mark.positive
 def test_get_projects_list(token):
     api = ProjectsAPI(BASE_URL, token)
     response = api.get_project()
@@ -13,6 +16,8 @@ def test_get_projects_list(token):
 
 
 @allure.title("Получение проекта по ID")
+@pytest.mark.api
+@pytest.mark.positive
 def test_get_project_by_id(token):
     api = ProjectsAPI(BASE_URL, token)
     api.post_project("Проект для проверки")
